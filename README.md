@@ -12,18 +12,22 @@ This template is guided by [Plihelix's repo](https://github.com/plihelix/wails-t
 
 Start by creating a new Wails application:
 
-`wails init -n Wails-SkeletonUI-Template-App -t svelte`
+```bash
+wails init -n Wails-SkeletonUI-Template-App -t svelte
+```
 
 Moving into the  newly created directory, remove the frontend directory as we will replace it soon:
 
-```
+```bash
 cd WailsSkeletonTemplateApp
 rm -r ./frontend
 ```
 
 Create a new frontend using SkeletonUI:
 
-`npm create skeleton-app@latest frontend`
+```bash
+npm create skeleton-app@latest frontend
+```
 
 We now have a frontend using SkeletonUI, with a backend that (when built) does not understand the directory structure. We can fix this by altering the backend and changing svelte to build a static site (disabling SSR). 
 
@@ -38,11 +42,13 @@ Your Go linter may complain that `frontend/build` does not exist, which can be s
 
 Add the following line to `wails.json`, so Wails places the `wailjs` directory in the default library alias for Sveltekit:
 
-`"wailsjsdir": "./frontend/src/lib",`
+```
+"wailsjsdir": "./frontend/src/lib",
+```
 
 We now add the static adapter to the frontend, as well as the svelte preprocessor:
 
-```
+```bash
 cd frontend
 npm install -D @sveltejs/adapter-static svelte-preprocess
 ```
@@ -51,7 +57,7 @@ We replace the `frontend/svelte.config.js` file to implement the static adapter.
 
 Edit `frontend.tsconfig.json` and/or `frontend/jsconfig.json` adding the following at the bottom of `"compilerOptions"`, to overwrite the default Sveltekit variables and allows for importing from the `frontend` directory:
 
-```
+```json
 "paths": {
   "$lib": ["src/lib"],
   "$lib/*": ["src/lib/*"],
