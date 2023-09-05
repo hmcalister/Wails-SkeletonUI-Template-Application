@@ -38,7 +38,15 @@ First, we note that the new frontend will build to the directory `frontend/build
 var assets embed.FS
 ```
 
-Your Go linter may complain that `frontend/build` does not exist, which can be silenced by either creating the directory now or waiting to build the project for the first time.
+Your Go linter may complain that `frontend/build` does not exist, which can be silenced by either creating the directory now or waiting to build the project for the first time. `frontend/build` is ignored by the Sveltekit default .gitignore, and probably should remain ignored as it is constantly changing with each build. To ensure your project builds correctly when using CI on a remote repo (e.g. GitHub), add a file to the `frontend/build` directory, immediately commit it, tell git to assume it remains unchanged forever, then remove it again (or let Sveltekit remove it when building the project next):
+
+```bash
+mkdir frontend/build
+touch frontend/build/.gitkeep
+git add frontend/build/.gitkeep
+git commit -m "Add .gitkeep to frontend/build to ensure directory is tracked"
+git update-index --skip-worktree frontend/build/.gitkeep
+```
 
 Add the following line to `wails.json`, so Wails places the `wailjs` directory in the default library alias for Sveltekit:
 
@@ -64,7 +72,5 @@ Edit `frontend.tsconfig.json` and/or `frontend/jsconfig.json` adding the followi
   "@/*": ["*"]
 }
 ```
-
-Include `.sveltekit` in your git repo, otherwise cloning your project may produce a copy that does not build correctly!
 
 That's it! Ensure your project operates correctly under both live development (`wails dev`) and building (`wails build`). Happy developing!
