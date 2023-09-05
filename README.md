@@ -12,7 +12,7 @@ This template is guided by [Plihelix's repo](https://github.com/plihelix/wails-t
 
 Start by creating a new Wails application:
 
-`wails init -n WailsSkeletonTemplateApp -t svelte`
+`wails init -n Wails-SkeletonUI-Template-App -t svelte`
 
 Moving into the  newly created directory, remove the frontend directory as we will replace it soon:
 
